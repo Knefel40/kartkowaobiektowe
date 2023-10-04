@@ -399,3 +399,164 @@ public final class Wychowawca extends Nauczyciel{
 public interface Dyzurny {
     public abstract void dyzuruj();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Czytelnik extends Osoba{
+    private int nrCzytelnika;
+    private static int liczbaCzytelnik;
+    private ArrayList<Ksiazka> wypozyczoneKsiazki;
+
+    public Czytelnik(String imie, String nazwisko, Date dataUr) {
+        super(imie, nazwisko, dataUr);
+        liczbaCzytelnik++;
+        this.nrCzytelnika = liczbaCzytelnik;
+        this.wypozyczoneKsiazki = new ArrayList<>();
+    }
+
+    public int getNrCzytelnika() {
+        return nrCzytelnika;
+    }
+
+    public void setNrCzytelnika(int nrCzytelnika) {
+        this.nrCzytelnika = nrCzytelnika;
+    }
+
+    public static int getLiczbaCzytelnik() {
+        return liczbaCzytelnik;
+    }
+
+    public static void setLiczbaCzytelnik(int liczbaCzytelnik) {
+        Czytelnik.liczbaCzytelnik = liczbaCzytelnik;
+    }
+
+    public ArrayList<Ksiazka> getWypozyczoneKsiazki() {
+        return wypozyczoneKsiazki;
+    }
+
+    public void setWypozyczoneKsiazki(ArrayList<Ksiazka> wypozyczoneKsiazki) {
+        this.wypozyczoneKsiazki = wypozyczoneKsiazki;
+    }
+
+    @Override
+    public String toString() {
+        return "Czytelnik{" +
+                "nrCzytelnika=" + nrCzytelnika +
+                ", wypozyczoneKsiazki=" + wypozyczoneKsiazki +
+                "} " + super.toString();
+    }
+}
+
+
+
+
+
+public class Ksiazka {
+    private String Tytul;
+    private Osoba autor;
+    private boolean czyWypozyczona;
+
+    public Ksiazka(String tytul, Osoba autor) {
+        Tytul = tytul;
+        this.autor = autor;
+        czyWypozyczona = false;
+    }
+
+    public String getTytul() {
+        return Tytul;
+    }
+
+    public void setTytul(String tytul) {
+        Tytul = tytul;
+    }
+
+    public Osoba getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Osoba autor) {
+        this.autor = autor;
+    }
+
+    public boolean isCzyWypozyczona() {
+        return czyWypozyczona;
+    }
+
+    public void setCzyWypozyczona(boolean czyWypozyczona) {
+        this.czyWypozyczona = czyWypozyczona;
+    }
+}
+
+
+
+
+
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+    }
+}
+
+
+
+
+
+
+
+import java.util.Date;
+
+public class Osoba {
+    private String imie;
+    private Date dataUr;
+    private String nazwisko;
+
+    public Osoba(String imie, String nazwisko, Date dataUr) {
+        this.imie = imie;
+        this.dataUr = dataUr;
+        this.nazwisko = nazwisko;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public Date getDataUr() {
+        return dataUr;
+    }
+
+    public void setDataUr(Date dataUr) {
+        this.dataUr = dataUr;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+
+    @Override
+    public String toString() {
+        return "Osoba{" +
+                "imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                '}';
+    }
+}
