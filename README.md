@@ -175,3 +175,227 @@ public class BibliotekaDemo {
         czytelnik.wypozyczKsiazke(ksiazka1.getTytul());
 
         // Sprawdzenie dostępności książ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+       /* Osoba osoba1 = new Osoba();
+        osoba1.setImie("Jaś");
+        osoba1.setWiek(12);
+        System.out.println(osoba1.getImie());
+        System.out.println(osoba1.getWiek());
+        Osoba osoba2 = new Osoba("Asia",16);
+        System.out.println(osoba2);  */
+        Uczen uczen = new Uczen("Tomek",7,234);
+        Uczen uczen1 = new Uczen("Alan",8);
+        Uczen uczen2 = new Uczen("Ala",6);
+        System.out.println(uczen1);
+        System.out.println(uczen2);
+        System.out.println(uczen);
+        Nauczyciel nauczycielS = new Nauczyciel("Sebastian",35,"testowanie","bazy danych","wf","fizyka");
+        Nauczyciel nauczycielW = new Nauczyciel("Witosław",50,"matematyka");
+        System.out.println(nauczycielS);
+        System.out.println(nauczycielW);
+        Klasa klasa3p = new Klasa("3P");
+        Wychowawca nauczycielP = new Wychowawca("Apolonia",70,klasa3p, "technika","muzyka");
+        klasa3p.dodajuczniadoklasy(uczen);
+        klasa3p.dodajuczniadoklasy(uczen1);
+        klasa3p.dodajuczniadoklasy(uczen2);
+        System.out.println(nauczycielP);
+        System.out.println(klasa3p);
+
+    }
+}
+
+
+
+
+
+import java.util.ArrayList;
+
+/**
+ * Klasa - klasa opisujaca zespol uczniow
+ */
+public class Klasa {
+    private String nazwa;
+    private ArrayList<Uczen> uczniowie;
+
+    public Klasa(String nazwa) {
+        this.nazwa = nazwa;
+        uczniowie = new ArrayList<>();
+    }
+
+    public void dodajuczniadoklasy(Uczen uczen){
+        if(uczniowie.contains((uczen))){
+            System.out.println("Ten uczeń jest już w klasie");
+        }
+        else{
+            uczniowie.add(uczen);
+        }
+    }
+    @Override
+    public String toString() {
+        return "Klasa{" +
+                "nazwa='" + nazwa + '\'' +
+                ", uczniowie=" + uczniowie +
+                '}';
+    }
+}
+
+
+
+
+
+import java.util.ArrayList;
+
+public sealed class Nauczyciel extends Osoba implements Dyzurny permits Wychowawca{
+    private ArrayList<String> przedmioty = new ArrayList<>();
+
+    public Nauczyciel(String imie, int wiek,String przedmiot) {
+        super(imie, wiek);
+        przedmioty.add(przedmiot);
+    }
+
+    public Nauczyciel(String imie, int wiek, String ...przedmioty) {
+        super(imie, wiek);
+        for (String przed:
+             przedmioty) {
+            this.przedmioty.add(przed);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Nauczyciel{" +
+                "przedmioty=" + przedmioty +
+                "} " + super.toString();
+    }
+
+    @Override
+    public void dyzuruj() {
+        System.out.println("Spacer po korytarzu");
+    }
+}
+
+
+
+
+
+public abstract class Osoba {
+    //klasa abstract nie pozwala na tworzenie jej obiektow
+    //mozna tylko wykorzystac ja do dziedziczenia
+    private String imie;
+    private int wiek;
+
+    public Osoba(String imie, int wiek) {
+        this.imie = imie;
+        this.wiek = wiek;
+    }
+
+    public Osoba() {
+        imie = "Edek";
+        wiek = 80;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public int getWiek() {
+        return wiek;
+    }
+
+    public void setWiek(int wiek) {
+        if(wiek<0){
+            this.wiek = 0;
+        }
+        else{
+            this.wiek = wiek;
+        }
+        this.wiek = wiek;
+    }
+
+    @Override
+    public String toString() {
+        return "Osoba{" +
+                "imie='" + imie + '\'' +
+                ", wiek=" + wiek +
+                '}';
+    }
+}
+
+
+
+
+public class Uczen extends Osoba implements Dyzurny{
+    private int nrEwidencyjny;
+    private static int liczbaUczniow = 0;
+
+    public Uczen(String imie, int wiek, int nrEwidencyjny) {
+        super(imie, wiek);
+        this.nrEwidencyjny = nrEwidencyjny;
+    }
+
+    public Uczen(String imie, int wiek) {
+        super(imie, wiek);
+        liczbaUczniow++;
+        nrEwidencyjny = liczbaUczniow;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Uczen{" +
+                "nrEwidencyjny=" + nrEwidencyjny +
+                "} " + super.toString();
+    }
+
+    @Override
+    public void dyzuruj() {
+        System.out.println("Wycieranie tablicy");
+    }
+}
+
+
+
+public final class Wychowawca extends Nauczyciel{
+        private Klasa klasa;
+
+    public Wychowawca(String imie, int wiek, Klasa klasa, String... przedmioty) {
+        super(imie, wiek, przedmioty);
+        this.klasa = klasa;
+    }
+
+    @Override
+    public String toString() {
+        return "Wychowawca{" +
+                "klasa=" + klasa +
+                "} " + super.toString();
+    }
+}
+
+
+
+
+public interface Dyzurny {
+    public abstract void dyzuruj();
+}
