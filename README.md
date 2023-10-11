@@ -560,3 +560,211 @@ public class Osoba {
                 '}';
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LEKCJA PANI KUPKI
+
+
+BIBLIOTEKARZ
+
+import java.util.ArrayList;
+
+public class Biblioteka {
+    public ArrayList<Czytelnik> czytelnicy;
+    public ArrayList<Ksiazka> ksiazki;
+    public ArrayList<Bibliotekarz> bibliotekarze;
+
+    public Biblioteka() {
+        czytelnicy = new ArrayList<>();
+        ksiazki= new ArrayList<>();
+        bibliotekarze= new ArrayList<>();
+    }
+    public void wyporzyczKsiazke(Ksiazka ksiazka, Czytelnik czytelnik){
+        if(ksiazka.isCzyWypozyczona()){
+            System.out.println("nie można wyporzyczyć ksiazki");
+        }
+        else{
+            czytelnik.dodajKsiazke(ksiazka);
+            ksiazka.setCzyWypozyczona(true);
+            //nie mogę zmienić parametru ksiazki
+
+        }
+    }
+    public int ileKsiazekWyporzyczyl(Czytelnik czytelnik){
+        return czytelnik.ileKsiazekWypozyczyl();
+    }
+
+}
+
+BIBLIOTEKARZ
+
+import java.util.Date;
+
+public class Bibliotekarz extends Osoba{
+    private Date dataZatrudnienia;
+
+    public Bibliotekarz(String imie, String nazwisko, Date dataUrodzenia) {
+        super(imie, nazwisko, dataUrodzenia);
+        dataZatrudnienia = new Date();
+    }
+}
+
+
+CZYTELNIK
+
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Czytelnik extends Osoba{
+    private int nrCzytelnika;
+    private static int liczbaCzytelnikow;
+    private ArrayList<Ksiazka> wypozyczoneKsiazki = new ArrayList<>();
+
+    public Czytelnik(String imie, String nazwisko, Date dataUrodzenia) {
+        super(imie, nazwisko, dataUrodzenia);
+        liczbaCzytelnikow++;
+        this.nrCzytelnika = liczbaCzytelnikow;
+    }
+
+    public int getNrCzytelnika() {
+        return nrCzytelnika;
+    }
+
+    public void setNrCzytelnika(int nrCzytelnika) {
+        this.nrCzytelnika = nrCzytelnika;
+    }
+
+    public static int getLiczbaCzytelnikow() {
+        return liczbaCzytelnikow;
+    }
+
+    public static void setLiczbaCzytelnikow(int liczbaCzytelnikow) {
+        Czytelnik.liczbaCzytelnikow = liczbaCzytelnikow;
+    }
+
+    public ArrayList<Ksiazka> getWypozyczoneKsiazki() {
+        return wypozyczoneKsiazki;
+    }
+
+    public void setWypozyczoneKsiazki(ArrayList<Ksiazka> wypozyczoneKsiazki) {
+        this.wypozyczoneKsiazki = wypozyczoneKsiazki;
+    }
+    public void dodajKsiazke(Ksiazka ksiazka){
+        wypozyczoneKsiazki.add(ksiazka);
+    }
+    public int ileKsiazekWypozyczyl(){
+        return wypozyczoneKsiazki.size();
+    }
+}
+
+
+KSIAZKA
+
+import java.util.Date;
+
+public class Ksiazka {
+    private String tytul;
+    private Osoba autor;
+    private boolean czyWypozyczona;
+
+    public Ksiazka(String tytul, String imie, String nazwisko, Date dataUr) {
+        this.tytul = tytul;
+        this.czyWypozyczona = false;
+        autor = new Osoba(imie,nazwisko,dataUr);
+    }
+
+    public String getTytul() {
+        return tytul;
+    }
+
+    public void setTytul(String tytul) {
+        this.tytul = tytul;
+    }
+
+    public Osoba getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Osoba autor) {
+        this.autor = autor;
+    }
+
+    public boolean isCzyWypozyczona() {
+        return czyWypozyczona;
+    }
+
+    public void setCzyWypozyczona(boolean czyWypozyczona) {
+        this.czyWypozyczona = czyWypozyczona;
+    }
+}
+
+
+MAIN
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+    }
+}
+
+
+OSOBA
+
+import java.util.Date;
+
+ public class Osoba {
+    private String imie;
+    private String nazwisko;
+
+    private Date dataUrodzenia;
+
+    public Osoba(String imie, String nazwisko,int rok,int m,int d) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        dataUrodzenia = new Date(rok,m,d);
+    }
+
+     public Osoba(String imie, String nazwisko, Date dataUrodzenia) {
+         this.imie = imie;
+         this.nazwisko = nazwisko;
+         this.dataUrodzenia = dataUrodzenia;
+     }
+
+     public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+
+    public Date getDataUrodzenia() {
+        return dataUrodzenia;
+    }
+
+    public void setDataUrodzenia(Date dataUrodzenia) {
+        this.dataUrodzenia = dataUrodzenia;
+    }
+}
